@@ -28,5 +28,7 @@ author_profile: true
   Hyndman. Under another major revision at *Manufacturing & Service Operations Management*. [[Document](https://rihuanhuang.github.io/files/trade_credit.pdf)]
   * Best Junior Faculty Paper, The 15th Workshop on Behavioral OM China, 2023.
 
-* "Haggling with a Bot: Human vs. LLM Negotiation in Supply Chain Contracts" with Yang Chen. 
+* "Haggling with a Bot: Human vs. LLM Negotiation in Supply Chain Contracts" with Yang Chen. Work in Progress.
+
+* "The Double Role of The Mid-tier in Managing Sustainability in Multi-tier Supply Chains: An Experimental Investigation" with Wee Kiat Lee. Work in Progress.
 

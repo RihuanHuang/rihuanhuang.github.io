@@ -194,7 +194,7 @@ redirect_from:
 **2025-03-21 Is my face getting darker?**
 <img src="https://rihuanhuang.github.io/images/MS/20250321.jpg" alt="2025_03_21" title="2025_03_21" style="max-height: 1600px; object-fit: cover;">
 
-**2025-04-10 hmmmmmmmm**
+**2025-04-10 hmmmmmmmmmm**
 <img src="https://rihuanhuang.github.io/images/MS/20250410.jpg" alt="2025_04_10" title="2025_04_10" style="max-height: 1600px; object-fit: cover;">
 
 <br>

@@ -12,6 +12,10 @@ author_profile: true
 {% include base_path %}
 
 ## Publications
+* "Trade Credit and Bankruptcy Risk in Supply Chains: An Experimental Study." with Andrew M. Davis and Kyle B. 
+  Hyndman. Forthcoming at *Manufacturing & Service Operations Management*. [[Document](https://rihuanhuang.github.io/files/trade_credit.pdf)]
+  * Best Junior Faculty Paper, The 15th Workshop on Behavioral OM China, 2023.
+
 * "Retailer Inventory Sharing in Two-Tier Supply Chains: An Experimental Investigation." with Andrew M. Davis and 
   Douglas J. Thomas. *Management Science* 2022, 68(12): 8773-8790. [[Document](https://rihuanhuang.github.io/files/InvShare.pdf)]
   * Runner-up: College of Behavioral OM Junior Scholar Paper Competition, POMS 2020.
@@ -24,10 +28,6 @@ author_profile: true
 [[Document](https://rihuanhuang.github.io/files/2017GLGCXB.pdf)]
 
 ## Working Papers and Work in Progress
-* "Trade Credit and Bankruptcy Risk in Supply Chains: An Experimental Study." with Andrew M. Davis and Kyle B. 
-  Hyndman. Under another major revision at *Manufacturing & Service Operations Management*. [[Document](https://rihuanhuang.github.io/files/trade_credit.pdf)]
-  * Best Junior Faculty Paper, The 15th Workshop on Behavioral OM China, 2023.yy
-
 * "Haggling with a Bot: Human vs. LLM Negotiation in Supply Chain Contracts" with Yang Chen. Work in Progress.
 
 * "The Double Role of The Mid-tier in Managing Sustainability in Multi-tier Supply Chains: An Experimental Investigation" with Wee Kiat Lee. Work in Progress.

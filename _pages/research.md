@@ -26,7 +26,7 @@ author_profile: true
 ## Working Papers and Work in Progress
 * "Trade Credit and Bankruptcy Risk in Supply Chains: An Experimental Study." with Andrew M. Davis and Kyle B. 
   Hyndman. Under another major revision at *Manufacturing & Service Operations Management*. [[Document](https://rihuanhuang.github.io/files/trade_credit.pdf)]
-  * Best Junior Faculty Paper, The 15th Workshop on Behavioral OM China, 2023.
+  * Best Junior Faculty Paper, The 15th Workshop on Behavioral OM China, 2023.yy
 
 * "Haggling with a Bot: Human vs. LLM Negotiation in Supply Chain Contracts" with Yang Chen. Work in Progress.
 

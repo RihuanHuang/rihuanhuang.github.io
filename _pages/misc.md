@@ -51,15 +51,16 @@ I enjoy running and have participated in a few marathon events.
   * Location: Shenzhen, Guangdong, China
   * Event: Half Marathon [[Certificate](https://rihuanhuang.github.io/files/sz-hm2023.jpg)]
 
-* Total running distance since 2014: 3538.45km (as of 04/13/2025)
-  * 2014: 729.89km  
-  * 2015: 442.90km
-  * 2016: 46.20km
-  * 2017: 90.24km
-  * 2018: 100.28km
-  * 2019: 232.23km
-  * 2020: 172.58km
-  * 2021: 223.53km
-  * 2022: 442.18km
-  * 2023: 468.31km
-  * 2024: 454.65km
+* Running distance by year:
+  * 2014: 729.89 km  
+  * 2015: 442.90 km
+  * 2016: 46.20 km
+  * 2017: 90.24 km
+  * 2018: 100.28 km
+  * 2019: 232.23 km
+  * 2020: 172.58 km
+  * 2021: 223.53 km
+  * 2022: 442.18 km
+  * 2023: 468.31 km
+  * 2024: 454.65 km
+  * 2025: 386.30 km (as of 08/22)

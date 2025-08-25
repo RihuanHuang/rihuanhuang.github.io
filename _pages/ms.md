@@ -128,7 +128,7 @@ redirect_from:
 
 <br><br><br>
 
-**2023-08-24 First birthday!!!**
+**2023-08-24 First birthday!**
 <img src="https://rihuanhuang.github.io/images/MS/20230824.jpg" alt="2023_08_24" title="Birthday" style="max-height: 1600px; object-fit: cover;">
 
 **2023-09-19 Ready to ship**
@@ -196,6 +196,9 @@ redirect_from:
 
 **2025-04-10 hmmmmmmmmmmmmmm**
 <img src="https://rihuanhuang.github.io/images/MS/20250410.jpg" alt="2025_04_10" title="2025_04_10" style="max-height: 1600px; object-fit: cover;">
+
+**2025-08-24 Third birthday!!!**
+<img src="https://rihuanhuang.github.io/images/MS/20250824.jpg" alt="2025_08_24" title="2025_08_24" style="max-height: 1600px; object-fit: cover;">
 
 <br>
 <br>

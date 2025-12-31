@@ -63,4 +63,4 @@ I enjoy running and have participated in a few marathon events.
   * 2022: 442.18 km
   * 2023: 468.31 km
   * 2024: 454.65 km
-  * 2025: 386.30 km (as of 08/22)
+  * 2025: 708.69 km

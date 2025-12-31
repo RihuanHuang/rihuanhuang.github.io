@@ -27,5 +27,5 @@ author_profile: true
 ## Working Papers and Work in Progress
 * "Haggling with a Bot: Human vs. LLM Negotiation in Supply Chain Contracts" with Yang Chen. In preparation for submission.
 
-* "The Double Role of The Mid-tier in Managing Sustainability in Multi-tier Supply Chains: An Experimental Investigation" with Wee Kiat Lee. In preparation for submission.
+* "When Sustainability Support Falls Flat: How Manufacturer Double Agency Role Shapes Effort in Multi-Tier Supply Chains" with Wee Kiat Lee. In preparation for submission.
 

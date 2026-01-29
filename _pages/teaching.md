@@ -12,10 +12,12 @@ redirect_from:
 ## School of Management and Economics, CUHK-Shenzhen
 ### Instructor
 * DMS 2030 Operations Management (Undergraduate)
+  * Spring 2026
   * Spring 2025 (5.95/6.00)
   * Spring 2024 (5.94/6.00)
   * Spring 2023 (5.93/6.00)
 * IBA 6305 Supply Chain and Logistics Management (MSc in Information Management and Business Analytics)
+  * Spring 2026
   * Spring 2025 (5.95/6.00)
   * Spring 2024 (5.87/6.00)
   * Fall 2022 (5.97/6.00)

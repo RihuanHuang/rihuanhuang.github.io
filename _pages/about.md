@@ -12,7 +12,7 @@ Welcome! I am Rihuan Huang, an assistant professor of operations management at T
 and Economics](https://sme.cuhk.edu.cn/en) at [The Chinese University of Hong Kong, Shenzhen](https://www.cuhk.edu.cn/en).
 I received my Ph.D. in [Operations, Technology & Information Management](https://business.cornell.edu/faculty-research/areas/operations-technology-and-information-management/) from [Johnson Graduate School of Management](https://www.johnson.cornell.edu/), [Cornell University](https://www.cornell.edu/). 
 
-My current research interests include supply chain contracting, supply chain finance and social responsibility. I use 
+My current research interests include supply chain management and human-AI interaction. I use 
 experimental methods to study these topics to generate managerial insights from a behavioral perspective. In this 
 website you can find more about my research and me (and a cat). 
 

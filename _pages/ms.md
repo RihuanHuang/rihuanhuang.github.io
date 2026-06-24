@@ -200,6 +200,9 @@ redirect_from:
 **2025-08-24 Third birthday!!!**
 <img src="https://rihuanhuang.github.io/images/MS/20250824.jpg" alt="2025_08_24" title="2025_08_24" style="max-height: 1600px; object-fit: cover;">
 
+**2026-06-23 Cappu, once a visiting scholar, now has tenure here and will stay with me**
+<img src="https://rihuanhuang.github.io/images/MS/20260623.jpg" alt="2026_06_23" title="2026_06_23" style="max-height: 1600px; object-fit: cover;">
+
 <br>
 <br>
 Looks like you really love me! What about knowing more about my "dark" side?

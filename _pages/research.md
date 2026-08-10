@@ -24,7 +24,13 @@ author_profile: true
 * "Inventory Allocation Policy to Distribution Centers with Minimum Split Orders in Online Retailing." with Jianbin Li and Lele Li. *Journal of Industrial Engineering & Engineering Management* (管理工程学报) 2017, 31(3): 167-173. 
 [[Document](https://rihuanhuang.github.io/files/2017GLGCXB.pdf)]
 
-## Working Papers
-* "Haggling with a Bot: Human vs. LLM Negotiation in Supply Chain Contracts" with Yang Chen. Major revision at *Management Science*. [[SSRN](https://papers.ssrn.com/abstract=6278158)]
+## Working Papers and Work in Progress
+* "Haggling with a Bot: Human vs. LLM Negotiation in Supply Chain Contracts." with Yang Chen. Major revision at *Management Science*. [[SSRN](https://papers.ssrn.com/abstract=6278158)]
 
-* "When Sustainability Support Falls Flat: How Manufacturer Double Agency Role Shapes Effort in Multi-Tier Supply Chains" with Wee Kiat Lee. [[SSRN](https://papers.ssrn.com/abstract=6058234)]
+* "When Sustainability Support Falls Flat: How Manufacturer Double Agency Role Shapes Effort in Multi-Tier Supply Chains." with Wee Kiat Lee. [[SSRN](https://papers.ssrn.com/abstract=6058234)]
+
+* “Setting the Bar in AI Task Delegation: The Role of Learning and Guiding." with Luyao Li and Wee Kiat Lee. 
+
+* “Delegating Under Responsibility: How Blame Rules Shape Human-AI Task Allocation." with Luyao Li and Liu Ming. 
+
+* ”Queue Length, Inventory Availability, and Consumer Purchase Quantity." with David Chen, Luyao Li and Jing Luo.

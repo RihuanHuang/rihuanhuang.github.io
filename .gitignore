@@ -1,2 +1,5 @@
 .idea/
 __pycache__/
+
+# 内部笔记，只在本机看
+NOTES.md

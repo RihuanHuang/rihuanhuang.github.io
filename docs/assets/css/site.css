@@ -4,7 +4,7 @@
 @font-face {
   font-family: "Source Han Serif SC";
   src: local("Source Han Serif SC"), local("SourceHanSerifSC-SemiBold"),
-       url("../fonts/SourceHanSerifSC-SemiBold.subset.e1351518.woff2") format("woff2");
+       url("../fonts/SourceHanSerifSC-SemiBold.subset.6d89fab5.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -13,7 +13,7 @@
 @font-face {
   font-family: "Source Han Sans SC";
   src: local("Source Han Sans SC"), local("SourceHanSansSC-Regular"),
-       url("../fonts/SourceHanSansSC-Regular.subset.e1351518.woff2") format("woff2");
+       url("../fonts/SourceHanSansSC-Regular.subset.6d89fab5.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -22,7 +22,7 @@
 @font-face {
   font-family: "Source Han Sans SC";
   src: local("Source Han Sans SC Bold"), local("SourceHanSansSC-Bold"),
-       url("../fonts/SourceHanSansSC-Bold.subset.e1351518.woff2") format("woff2");
+       url("../fonts/SourceHanSansSC-Bold.subset.6d89fab5.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -305,7 +305,7 @@ a:hover { color: var(--red); }
 .pub__title { display: block; font-weight: 600; line-height: 1.4; margin-bottom: 0.25rem; }
 .pub__meta { display: block; font-size: 0.9rem; color: var(--muted-d); line-height: 1.5; }
 .pub__venue { font-family: var(--serif); font-style: italic; color: var(--ink); }
-.pub__year { font-family: var(--mono); font-size: 0.85em; }
+.pub__year { font-family: var(--mono); font-size: 0.85em; white-space: nowrap; }
 
 .tagline {
   display: inline-flex;

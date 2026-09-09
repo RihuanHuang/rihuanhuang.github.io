@@ -1,5 +1,3 @@
-# 这个仓库在 Windows 上编辑但用 Git Bash 跑脚本：*.sh 一旦被转成 CRLF
-# 就会报 "\r: command not found"，所以全仓库锁定 LF。
 * text=auto eol=lf
 
 *.jpg  binary

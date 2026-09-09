@@ -1,17 +1,4 @@
 #!/usr/bin/env python3
-"""
-Assemble docs/*.html from src/.
-
-    py build.py            build
-    py build.py --diff     build into memory and show what would change
-
-Shared chrome (header/nav, banner, sidebar, footer, scripts) lives once in
-src/partials/. Each page in src/pages/ carries a short front-matter block plus
-its own <main>. Nothing is duplicated across the six pages any more.
-
-Everything else in docs/ -- images, files, fonts, CSS -- is untouched.
-"""
-
 import argparse
 import difflib
 import io
@@ -99,7 +86,6 @@ def render(filename):
 
     profile_name = "profile-ms" if meta.get("profile") == "ms" else "profile"
 
-    # the scroll-spy script only makes sense where there is a section nav
     has_toc = meta.get("toc") == "yes"
     toc = "\n  " + partial(f"toc.{lg}.html") + "\n" if has_toc else ""
     scripts = partial("scripts.html") if has_toc else ""

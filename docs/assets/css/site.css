@@ -1,7 +1,6 @@
 /* Rihuan Huang — personal site */
 
-/* Source Han (SIL OFL), subset to the glyphs this site actually uses.
-   unicode-range keeps English-only pages from downloading them. */
+/* Source Han, SIL Open Font License 1.1 */
 @font-face {
   font-family: "Source Han Serif SC";
   src: local("Source Han Serif SC"), local("SourceHanSerifSC-SemiBold"),

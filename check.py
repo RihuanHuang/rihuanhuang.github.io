@@ -1,14 +1,4 @@
 #!/usr/bin/env python3
-"""
-Pre-upload checks for docs/.
-
-    py check.py
-
-Exits non-zero if anything is wrong, so it can gate an upload.
-The font check shells out to subset-fonts.py so both share one definition of
-"which characters does this site need".
-"""
-
 import glob
 import io
 import os
@@ -176,8 +166,6 @@ def check_links():
     id_cache = {}
     for page in ALL_PAGES:
         html = read(page)
-        # local references: strip the #fragment before testing the file,
-        # then check the fragment resolves to an id on the target page
         for ref in sorted(set(re.findall(r'(?:href|src)="([^"][^":]*)"', html))):
             if ref.startswith(("mailto:", "//", "#")) and not ref.startswith("#"):
                 continue
@@ -202,7 +190,6 @@ def check_links():
         if "〔待译" in visible(html):
             n = visible(html).count("〔待译")
             fail("翻译", f"{page}: 还有 {n} 处未翻译的占位")
-    # font files referenced by the stylesheet
     css = io.open(os.path.join(SITE, "assets", "css", "site.css"), encoding="utf-8").read()
     for f in re.findall(r'url\("\.\./fonts/([^"]+)"\)', css):
         total += 1
@@ -259,7 +246,6 @@ def check_bilingual():
                 fail("中英一致", f"{page}: 首页不该有 aria-current")
             if not page.startswith("index") and len(cur) != 1:
                 fail("中英一致", f"{page}: aria-current 有 {len(cur)} 处，应为 1 处")
-        # the current-page marker must sit on the link to this very page
         if not en.startswith("index"):
             for page in (en, zh):
                 m = re.search(r'<a href="([^"]+)" aria-current="page"', nav_of(page))
@@ -271,7 +257,6 @@ def check_bilingual():
 # --- run ------------------------------------------------------------------- #
 
 def check_in_sync():
-    """docs/*.html must be what src/ produces, or an edit is about to be lost."""
     r = subprocess.run([sys.executable, os.path.join(HERE, "build.py"), "--diff"],
                        capture_output=True, text=True, encoding="utf-8", errors="replace")
     out = r.stdout or ""
@@ -290,8 +275,6 @@ if __name__ == "__main__":
                check_links, check_orphans, check_bilingual):
         fn()
 
-    # CNAME and .nojekyll only mean anything to GitHub Pages; they are inert
-    # on the school server, so they stay in the count but are called out.
     n_files = sum(len(fs) for _, _, fs in os.walk(SITE))
     size = sum(os.path.getsize(os.path.join(r, f))
                for r, _, fs in os.walk(SITE) for f in fs)

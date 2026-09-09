@@ -1,22 +1,4 @@
 #!/usr/bin/env python3
-"""
-Subset the Source Han fonts down to the glyphs this site actually uses.
-
-    py subset-fonts.py            rebuild the subsets and rewrite the CSS
-    py subset-fonts.py --check    verify only; non-zero exit if anything is off
-
-The output filenames carry a hash of the character set, e.g.
-
-    SourceHanSansSC-Regular.subset.a3f91c2d.woff2
-
-so any change to the Chinese text produces a new filename. Browsers and the
-school's server can then cache the fonts forever without ever serving a stale
-one -- which is what caused characters to render in a mismatched fallback font
-after earlier edits.
-
-Requires (locally only, never uploaded):  py -m pip install fonttools brotli
-"""
-
 import argparse
 import glob
 import hashlib
@@ -55,7 +37,6 @@ CJK = (
 
 
 def wanted_chars():
-    """Every CJK-ish character visible on the rendered pages."""
     seen = set()
     for path in sorted(glob.glob(os.path.join(SITE, "*.html"))):
         s = io.open(path, encoding="utf-8").read()
@@ -78,7 +59,6 @@ def css_text():
 
 
 def css_font_urls():
-    """Font files the stylesheet currently points at."""
     return re.findall(r'url\("\.\./fonts/([^"]+\.woff2)"\)', css_text())
 
 
@@ -160,7 +140,6 @@ def build():
         produced.append(out_name)
         print(f"    {out_name}  {os.path.getsize(out) // 1024} KB")
 
-    # point the stylesheet at the new filenames
     css = css_text()
     for (_, name), out_name in zip(FONTS, produced):
         css = re.sub(
@@ -172,7 +151,6 @@ def build():
     io.open(CSS, "w", encoding="utf-8").write(css)
     print("==> site.css updated")
 
-    # drop superseded subsets so nothing stale gets uploaded
     for f in sorted(os.listdir(FONT_DIR)):
         if f.endswith(".woff2") and f not in produced:
             os.remove(os.path.join(FONT_DIR, f))

@@ -1,12 +1,3 @@
-# 本地预览 docs/ 目录，用来在上传前检查效果。
-#
-#   powershell -NoProfile -ExecutionPolicy Bypass -File preview.ps1
-#   然后浏览器打开   http://localhost:8765/subpath/
-#
-# 之所以挂在一个子路径下，是为了模拟学校的
-# https://mypage.cuhk.edu.cn/<账号>/ —— 这样任何写死的绝对路径都会立刻 404 暴露出来。
-# Ctrl+C 停止。
-
 param(
   [string]$Root   = (Join-Path $PSScriptRoot "docs"),
   [int]   $Port   = 8765,

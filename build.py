@@ -59,7 +59,7 @@ def parse_page(path):
     raw = io.open(path, encoding="utf-8").read()
     m = re.match(r"---\n(.*?)\n---\n(.*)", raw, flags=re.S)
     if not m:
-        raise SystemExit(f"{path}: 缺少 front matter")
+        raise SystemExit(f"{path}: missing front matter")
     meta = {}
     for line in m.group(1).splitlines():
         if ":" in line:
@@ -113,7 +113,7 @@ def render(filename):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--diff", action="store_true",
-                    help="只对比不写盘")
+                    help="compare only, do not write")
     args = ap.parse_args()
 
     pages = sorted(f for f in os.listdir(PAGES) if f.endswith(".html"))
@@ -134,16 +134,16 @@ def main():
             for line in d[:40]:
                 print("       " + line)
             if len(d) > 40:
-                print(f"       ... 还有 {len(d) - 40} 行差异")
+                print(f"       ... {len(d) - 40} more lines")
         else:
             io.open(dest, "w", encoding="utf-8", newline="\n").write(new)
             print(f"  ->  {f}")
 
     if args.diff:
-        print(f"\n{changed} 个页面与 src/ 不一致" if changed
-              else "\ndocs/ 与 src/ 完全一致")
+        print(f"\n{changed} page(s) differ from src/" if changed
+              else "\ndocs/ is identical to src/")
     else:
-        print(f"\n生成 {len(pages)} 个页面，其中 {changed} 个有改动")
+        print(f"\nbuilt {len(pages)} pages, {changed} changed")
     return 0
 
 

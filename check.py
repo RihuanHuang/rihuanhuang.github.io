@@ -50,12 +50,12 @@ def check_fonts():
     if r.returncode != 0:
         for line in (r.stdout or "").splitlines():
             if line.strip().startswith("-"):
-                fail("字体", line.strip()[2:])
-        if not any(p[0] == "字体" for p in problems):
-            fail("字体", (r.stdout or r.stderr or "").strip()[:300])
+                fail("fonts", line.strip()[2:])
+        if not any(p[0] == "fonts" for p in problems):
+            fail("fonts", (r.stdout or r.stderr or "").strip()[:300])
     else:
         m = re.search(r"pages need (\d+) glyphs", r.stdout or "")
-        notes.append(f"字体覆盖 {m.group(1) if m else '?'} 个中文字形")
+        notes.append(f"fonts cover {m.group(1) if m else '?'} CJK glyphs")
 
 
 # --- 2. tag structure ------------------------------------------------------ #
@@ -74,12 +74,12 @@ class Structure(HTMLParser):
         if tag in VOID:
             return
         if not self.stack:
-            self.errors.append(f"多余的 </{tag}> 第 {self.getpos()[0]} 行")
+            self.errors.append(f"stray </{tag}> on line {self.getpos()[0]}")
             return
         if self.stack[-1][0] != tag:
             top, pos = self.stack[-1]
             self.errors.append(
-                f"第 {self.getpos()[0]} 行的 </{tag}> 对不上，栈顶是第 {pos[0]} 行的 <{top}>")
+                f"</{tag}> on line {self.getpos()[0]} does not match <{top}> opened on line {pos[0]}")
             for i in range(len(self.stack) - 1, -1, -1):
                 if self.stack[i][0] == tag:
                     del self.stack[i:]
@@ -93,9 +93,9 @@ def check_structure():
         p = Structure()
         p.feed(read(page))
         for e in p.errors:
-            fail("结构", f"{page}: {e}")
+            fail("structure", f"{page}: {e}")
         for tag, pos in p.stack:
-            fail("结构", f"{page}: <{tag}> 第 {pos[0]} 行未闭合")
+            fail("structure", f"{page}: <{tag}> opened on line {pos[0]} is never closed")
 
 
 # --- 3. image dimensions --------------------------------------------------- #
@@ -141,7 +141,7 @@ def check_images():
             if not os.path.isfile(path):
                 continue
             if not (w and h):
-                fail("图片", f"{page}: {src.group(1)} 缺 width/height")
+                fail("images", f"{page}: {src.group(1)} has no width/height")
                 continue
             actual = dims(path)
             if not actual:
@@ -149,10 +149,10 @@ def check_images():
             declared = int(w.group(1)) / int(h.group(1))
             real = actual[0] / actual[1]
             if abs(declared - real) > 0.01:
-                fail("图片", f"{page}: {src.group(1)} 声明 "
-                             f"{w.group(1)}x{h.group(1)}，实际 {actual[0]}x{actual[1]}")
+                fail("images", f"{page}: {src.group(1)} declares "
+                             f"{w.group(1)}x{h.group(1)}, file is {actual[0]}x{actual[1]}")
             checked += 1
-    notes.append(f"图片宽高比 {checked} 处一致")
+    notes.append(f"{checked} image aspect ratios match")
 
 
 # --- 4. links and assets --------------------------------------------------- #
@@ -175,27 +175,27 @@ def check_links():
             if path:
                 total += 1
                 if not os.path.isfile(os.path.join(SITE, path)):
-                    fail("链接", f"{page}: 指向不存在的 {path}")
+                    fail("links", f"{page}: links to missing {path}")
                     continue
             if frag:
                 if target not in id_cache:
                     id_cache[target] = ids_of(target) if os.path.isfile(
                         os.path.join(SITE, target)) else set()
                 if frag not in id_cache[target]:
-                    fail("链接", f"{page}: 锚点 #{frag} 在 {target} 上不存在")
+                    fail("links", f"{page}: #{frag} matches no id on {target}")
         for abs_ref in set(re.findall(r'(?:href|src)="(/[^/][^"]*)"', html)):
-            fail("链接", f"{page}: 绝对路径 {abs_ref}（子目录部署下会 404）")
+            fail("links", f"{page}: absolute path {abs_ref} (404s under a subpath)")
         if "github.io" in html:
-            fail("链接", f"{page}: 仍有指回 github.io 的链接")
+            fail("links", f"{page}: still links back to github.io")
         if "〔待译" in visible(html):
             n = visible(html).count("〔待译")
-            fail("翻译", f"{page}: 还有 {n} 处未翻译的占位")
+            fail("translation", f"{page}: {n} untranslated placeholders left")
     css = io.open(os.path.join(SITE, "assets", "css", "site.css"), encoding="utf-8").read()
     for f in re.findall(r'url\("\.\./fonts/([^"]+)"\)', css):
         total += 1
         if not os.path.isfile(os.path.join(SITE, "assets", "fonts", f)):
-            fail("链接", f"site.css: 指向不存在的字体 {f}")
-    notes.append(f"链接与资源 {total} 处可达")
+            fail("links", f"site.css: points at missing font {f}")
+    notes.append(f"{total} references resolve")
 
 
 # --- 5. orphans ------------------------------------------------------------ #
@@ -214,7 +214,7 @@ def check_orphans():
                 continue
             rel = os.path.join(folder, name).replace("\\", "/")
             if rel not in referenced:
-                fail("孤儿文件", f"{rel} 在磁盘上但没有任何页面引用")
+                fail("orphans", f"{rel} is on disk but no page references it")
 
 
 # --- 6. bilingual consistency --------------------------------------------- #
@@ -228,30 +228,30 @@ def nav_of(page):
 def check_bilingual():
     for en, zh in zip(PAGES_EN, PAGES_ZH):
         if not os.path.isfile(os.path.join(SITE, zh)):
-            fail("中英一致", f"{en} 没有对应的 {zh}")
+            fail("bilingual", f"{en} has no counterpart {zh}")
             continue
         n_en = len(re.findall(r"<a ", nav_of(en)))
         n_zh = len(re.findall(r"<a ", nav_of(zh)))
         if n_en != n_zh:
-            fail("中英一致", f"导航项数不同：{en} {n_en} 个，{zh} {n_zh} 个")
+            fail("bilingual", f"nav item count differs: {en} has {n_en}, {zh} has {n_zh}")
         for page, want in ((en, zh), (zh, en)):
             m = re.search(r'class="langswitch" href="([^"]+)"', nav_of(page))
             if not m:
-                fail("中英一致", f"{page}: 找不到语言切换按钮")
+                fail("bilingual", f"{page}: no language switch link")
             elif m.group(1) != want:
-                fail("中英一致", f"{page}: 切换按钮指向 {m.group(1)}，应为 {want}")
+                fail("bilingual", f"{page}: language switch points at {m.group(1)}, expected {want}")
         for page in (en, zh):
             cur = re.findall(r'aria-current="page"', nav_of(page))
             if page.startswith("index") and cur:
-                fail("中英一致", f"{page}: 首页不该有 aria-current")
+                fail("bilingual", f"{page}: the home page should not carry aria-current")
             if not page.startswith("index") and len(cur) != 1:
-                fail("中英一致", f"{page}: aria-current 有 {len(cur)} 处，应为 1 处")
+                fail("bilingual", f"{page}: {len(cur)} aria-current markers, expected 1")
         if not en.startswith("index"):
             for page in (en, zh):
                 m = re.search(r'<a href="([^"]+)" aria-current="page"', nav_of(page))
                 if m and m.group(1) != page:
-                    fail("中英一致", f"{page}: 高亮的是 {m.group(1)}，应为自己")
-    notes.append(f"中英页面 {len(PAGES_EN)} 对")
+                    fail("bilingual", f"{page}: aria-current marks {m.group(1)}, expected the page itself")
+    notes.append(f"{len(PAGES_EN)} EN/ZH page pairs")
 
 
 # --- run ------------------------------------------------------------------- #
@@ -263,11 +263,11 @@ def check_in_sync():
     drifted = [ln.strip()[3:].strip() for ln in out.splitlines() if ln.startswith("  ~ ")]
     if drifted:
         for f in drifted:
-            fail("源同步", f"docs/{f} 和 src/ 不一致 —— 你可能改错了地方"
-                           "（应该改 src/，docs/ 是产物）")
-        fail("源同步", "看差异：py build.py --diff　；确认后重新生成：./build.sh")
+            fail("source", f"docs/{f} does not match src/ -- edit src/, "
+                           "docs/ is generated")
+        fail("source", "see the diff with py build.py --diff, then rebuild with ./build.sh")
     else:
-        notes.append("docs/ 与 src/ 同步")
+        notes.append("docs/ matches src/")
 
 
 if __name__ == "__main__":
@@ -282,18 +282,18 @@ if __name__ == "__main__":
     print()
     for n in notes:
         print(f"  ✓ {n}")
-    print(f"  ✓ 上传清单 {n_files} 个文件，{size // 1024 // 1024} MB")
+    print(f"  ✓ upload set: {n_files} files, {size // 1024 // 1024} MB")
 
     if problems:
-        print(f"\n  发现 {len(problems)} 个问题：\n")
+        print(f"\n  {len(problems)} problem(s):\n")
         last = None
         for section, msg in problems:
             if section != last:
                 print(f"  [{section}]")
                 last = section
             print(f"     - {msg}")
-        print("\n  修好之后重新跑一次。")
+        print("\n  fix these and run again.")
         sys.exit(1)
 
-    print("\n  全部通过，可以上传。")
+    print("\n  all checks passed.")
     sys.exit(0)

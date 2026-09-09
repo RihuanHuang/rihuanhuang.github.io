@@ -1,31 +1,243 @@
-A Github Pages template for academic websites. This was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License. See LICENSE.md.
+# site/ — 生成产物，不要手改
 
-I think I've got things running smoothly and fixed some major bugs, but feel free to file issues or make pull requests if you want to improve the generic template / theme.
+手写的静态站，取代 `../site_old/`（那份是 Minimal Mistakes / AcademicPages 的镜像）。
 
-### Note: if you are using this repo and now get a notification about a security vulnerability, delete the Gemfile.lock file. 
+**这个目录里的六个 `.html` 是 `../build.sh` 从 `../src/` 拼出来的，直接改会在下次生成时被覆盖。**
+`assets/`、`images/`、`files/` 不受影响，那些是直接放在这里维护的。
 
-# Instructions
+改内容去 `../src/`：
 
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Fork [this repository](https://github.com/academicpages/academicpages.github.io) by clicking the "fork" button in the top right. 
-1. Go to the repository's settings (rightmost item in the tabs that start with "Code", should be below "Unwatch"). Rename the repository "[your GitHub username].github.io", which will also be your website's URL.
-1. Set site-wide configuration and create content & metadata (see below -- also see [this set of diffs](http://archive.is/3TPas) showing what files were changed to set up [an example site](https://getorg-testacct.github.io) for a user with the username "getorg-testacct")
-1. Upload any files (like PDFs, .zip files, etc.) to the files/ directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.  
-1. Check status by going to the repository settings, in the "GitHub pages" section
-1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
+```
+src/partials/     公用部分，改一次六个页面全跟着变
+  header.en/zh    顶栏与导航（{{home}} {{other}} {{cur_misc}} {{cur_ms}} 由 build 填）
+  profile.en/zh   侧栏（主）
+  profile-ms.en/zh 侧栏（麻薯页）
+  banner-full     首页大幅 banner
+  banner-slim     子页面窄条（同一份图形，viewBox 开窗到下半部）
+  toc.en/zh       右侧锚点导航
+  footer.en/zh    页脚
+  scripts.html    锚点高亮脚本（只有带目录的页面会引入）
 
-See more info at https://academicpages.github.io/
+src/pages/        每页只剩 front matter + 自己的 <main>
+```
 
-## To run locally (not on GitHub Pages, to serve on your own computer)
+改完跑：
 
-1. Clone the repository and made updates as detailed above
-1. Make sure you have ruby-dev, bundler, and nodejs installed: `sudo apt install ruby-dev ruby-bundler nodejs`
-1. Run `bundle clean` to clean up the directory (no need to run `--force`)
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-1. Run `bundle exec jekyll liveserve` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change.
+```bash
+./build.sh        # 生成六个页面
+./check.sh        # 自检（第一项就是「site/ 与 src/ 是否同步」）
+```
 
-# Changelog -- bugfixes and enhancements
+`./build.sh --diff` 只对比不写盘，可以先看会改动什么。
 
-There is one logistical issue with a ready-to-fork template theme like academic pages that makes it a little tricky to get bug fixes and updates to the core theme. If you fork this repository, customize it, then pull again, you'll probably get merge conflicts. If you want to save your various .yml configuration files and markdown files, you can delete the repository and fork it again. Or you can manually patch. 
+## 预览
 
-To support this, all changes to the underlying code appear as a closed issue with the tag 'code change' -- get the list [here](https://github.com/academicpages/academicpages.github.io/issues?q=is%3Aclosed%20is%3Aissue%20label%3A%22code%20change%22%20). Each issue thread includes a comment linking to the single commit or a diff across multiple commits, so those with forked repositories can easily identify what they need to patch.
+```
+powershell -NoProfile -ExecutionPolicy Bypass -File ../preview.ps1 -Root . -Port 8765
+```
+
+然后打开 <http://localhost:8767/huangrihuan/>。子路径是故意的，用来暴露写死的绝对路径。
+
+## 中英双语
+
+**六个页面，中英各三个。** 用独立文件而不是 JS 切换，理由：不引入 `.js`（学校手册
+「网页或潜在脚本文件」那条模糊地带继续绕开）、地址栏能看出当前语种、改中文时完全不会碰到英文页。
+
+```
+index.html  ←→  index-zh.html
+misc.html   ←→  misc-zh.html
+ms.html     ←→  ms-zh.html
+```
+
+切换按钮在导航栏最左边（About 左侧），英文页上写「中文」，中文页上写「EN」，
+**逐页对应** —— 在 misc 页点切换会去 misc-zh，不会跳回首页。
+
+### 怎么填翻译
+
+中文页里所有待翻译的地方都标成了 `〔待译：…〕`，**搜 `〔待译` 就能找到全部**，
+填完搜不到就说明没有遗漏。共 110 处：`index-zh` 45、`misc-zh` 27、`ms-zh` 38。
+
+两种形式：
+
+- **`〔待译：原文〕`** —— 纯文本，整段替换掉即可（导航、标题、按钮、图说等）
+- **`〔待译〕 原文…`** —— 段落里含链接或 `<br>`，标记只加在**前面**，原文和标签**原样保留**。
+  这样 `<a href>` 不会丢，你改中文时可以按中文语序把链接挪到合适位置，改完删掉 `〔待译〕` 就行。
+
+### 故意不加占位的地方
+
+这些按学术惯例保持英文，中文主页上一般也不翻译：
+
+- 论文标题、期刊名、合作者姓名、卷期页码
+- 课程代码（`DMS 2030`、`IBA 6305`）
+- `PDF` / `SSRN` / `CERT` 这些标签
+- 比赛距离标签（`HALF` / `FULL` / `10 KM`）
+
+想翻的话告诉我，我再加一批占位。
+
+### 改英文页之后
+
+英文页改了内容，中文页**不会自动跟着变** —— 两边是独立文件。加了新段落要手动同步过去。
+
+## 页面
+
+- `index.html` —— 一版到底：About / Research / Teaching 三节，右栏锚点导航随滚动高亮
+- `misc.html` —— 跑步，独立一页，保留全部完赛证书链接
+- `ms.html` —— 麻薯，35 张照片
+- `assets/css/site.css` —— 无框架
+
+三页齐了，可以上传。
+
+## 上传前先自检
+
+```bash
+./check.sh
+```
+
+（在上级目录。有问题会列出来并非零退出，没问题输出「全部通过，可以上传」。）
+
+一次跑六类检查：
+
+| 检查 | 抓什么 |
+| --- | --- |
+| 字体覆盖 | 新加的中文字不在子集里（症状是静默的：某几个字掉回系统字体） |
+| 标签结构 | 截断、未闭合 —— 浏览器会自动补救所以肉眼看不出来 |
+| 图片宽高比 | `width`/`height` 和实际不符，会让懒加载时页面跳动 |
+| 链接与锚点 | 死链、坏锚点、绝对路径、指回 github.io 的残留、未翻译的 `〔待译` 占位 |
+| 孤儿文件 | `files/`、`images/` 里没被任何页面引用的 |
+| 中英一致 | 页面成对、导航项数相同、切换按钮双向正确、`aria-current` 落在自己身上 |
+
+字体那一项是直接调用 `subset-fonts.py --check` 的，所以「自检」和「重切」用的是同一套
+字符集提取逻辑，不会出现两边算出不同结果的情况。
+
+**这套检查是用注入故障验证过的** —— 七类问题各造一个，确认都能抓到、退出码为 1。
+
+## 上传
+
+传 `site/` **里面的**内容（`README.md` 除外），共 **61 个文件、98 MB**，
+在学校手册的限制内（≤1200 个文件、<1024 MB）。
+
+文件类型只有 `jpg 38 / pdf 8 / html 3 / png 1 / jpeg 1 / css 1` ——
+**一个 `.js` 都没有**，手册第十六节「网页或潜在脚本文件」那条模糊地带完全绕开了。
+
+## 麻薯页的两个处理
+
+**轮播改成并排。** 原页用了三个 Bootstrap carousel，去掉 Bootstrap 后没有照搬成
+JS 相册，而是改成并排的图组 —— 这三组本来就是两三张一讲的段子
+（「Paper submitted / Paper rejected」「Just lost my paws / Lost again」），
+铺垫和包袱同屏才好笑，轮播反而把它们拆散了。窄屏下自动堆叠成一列。
+
+**懒加载 + 预留尺寸。** 35 张图全部带 `loading="lazy"`，首屏只加载 5 张；
+每张都写了真实的 `width`/`height`，浏览器据此预留纵横比，
+滚动时不会因为图片陆续到位而整页跳动。图片本身**一个字节都没改**。
+
+顺带一提 `images/MS/meme.png` 是 50 MB（7251×4708），占整站体积一半以上，
+在页面上最宽只显示到约 960 px。你说过不动图片，所以留着了；
+真要提速，压这一张就够。
+
+## 中文字体：自带思源，已子集化
+
+Windows 自带的中文字体里，衬线只有 SimSun（宋体），在标题尺寸下又细又旧；
+所以中文字体是**自己带的**，不依赖访客机器上有什么。
+
+| 用途 | 字体 | 源文件 | 子集后 |
+| --- | --- | --- | --- |
+| 标题 | 思源宋体 SourceHanSerifSC SemiBold | 24 MB | **60 KB** |
+| 正文 | 思源黑体 SourceHanSansSC Regular | 16 MB | **48 KB** |
+| 中文粗体 | 思源黑体 SourceHanSansSC Bold | 16 MB | **48 KB** |
+
+**授权**：思源是 SIL OFL，允许自由分发和网页嵌入。
+⚠️ **不能换成微软雅黑、等线这类 Windows 自带字体** —— 它们随系统授权，禁止上传到服务器再分发。
+
+标题用宋体是因为英文标题是 Cambria 这类衬线体，中文配宋体才对得上；
+思源宋体是当代重新设计的，和 SimSun 不是一回事。
+
+粗体单独带一个字重，否则中文小标题和图说（600 字重）会被浏览器做「伪粗体」，糊。
+
+`@font-face` 上写了 `unicode-range`，**英文页不会下载宋体**（实测英文页只拉两个黑体子集共 92 KB，
+因为导航里的「麻薯」需要）。`font-display: swap` 保证字体没到之前文字先用系统字体显示，不会白屏。
+
+`src` 里带了 `local()`，访客机器上装了完整思源的话直接用本地的，连下载都省了。
+
+### 改了中文内容之后要重切
+
+子集**只包含页面里出现过的字**。新加的字不在子集里会掉回系统字体，
+一句话里出现两种字形，非常显眼。所以中文改完跑一次：
+
+```bash
+./subset-fonts.sh
+```
+
+（在上级目录，不在 `site/` 里。依赖 `py -m pip install fonttools brotli`，
+只在本机跑，**不上传**。上传的只有 `assets/fonts/*.subset.woff2` 三个文件。）
+
+## 字体：不要把 Georgia 加回衬线栈
+
+`--serif` 里**故意没有 Georgia**。Georgia 的 `U+01D4`（ǔ，拼音第三声）会渲染成
+「u + 一个悬空抬高的短音符」，标题里的「麻薯(MáShǔ)」就散架了。
+
+排查时踩的坑：用 canvas `measureText` 宽度比较来判断字体是否含某字形是**不可靠的** ——
+Georgia 确实含这个字形，只是画得不对；`document.fonts.check()` 对没装的字体也返回 true，
+同样不可信。**唯一可靠的办法是把候选字体并排渲染出来用眼睛看。**
+
+实测正确的：Cambria、Constantia、Palatino Linotype、Times New Roman、Segoe UI。
+现在的栈是 `"Iowan Old Style", "Palatino Linotype", Palatino, Cambria, Constantia, "Songti SC", serif`。
+
+## 代码里不写注释
+
+`index.html` / `misc.html` / `ms.html` / `site.css` 里**没有中文注释** —— 访客一按
+「查看源代码」就全看得见，所以说明一律放在这份 README 里。CSS 里只留了
+`/* Masthead */` 这种英文小节标签，那是常规写法。
+
+以下几条是改代码时容易踩回去的坑，都是没有注释兜着的：
+
+| 位置 | 规则 | 不这么写会怎样 |
+| --- | --- | --- |
+| `.profile__links li` | 必须 `display:flex` | 侧栏第一项「Shenzhen, China」没有 `<a>` 包裹，`.ico` 会撑成整行的米黄色块 |
+| `.pub__meta` | 必须 `display:block` | 后面的获奖徽章会跟在 meta 末尾同行流动，不独占一行 |
+| `.races li` | 后两列必须固定宽度 | 每个 `li` 是独立 grid，用 `auto` 的话没证书的那行标签会错位 |
+| `.mainnav a` | `white-space:nowrap` | 窄屏下「麻薯」会折成两行 |
+| `.banner--slim` | 不需要高度规则 | 子页面用的是同一份 SVG，只把 `viewBox` 开窗到下半部（`0 90 1232 190`），高度由那个比例决定 |
+| `ms.html` 的 `<img>` | 都要带真实 `width`/`height` | 配合 `loading="lazy"`，浏览器靠这两个属性预留纵横比；漏了会在滚动时整页乱跳 |
+
+`ms.html` 里的 `.strip` 是原来三个 Bootstrap 轮播的替代 —— 那几组本来就是两三张一讲的段子，
+并排比轮播好，而且不需要 JS。
+
+## 设计约定
+
+**容器宽度 1280px 贯穿顶栏、banner、正文、页脚**，四者左右边缘严格对齐
+（banner 24→1241，左栏起点 24，右栏终点 1241）。内部三栏 220 / 717 / 200，
+正文每行约 72 字符。这是 Valtorta 那个模板没做到的地方 —— 它导航通栏、正文只有 960px。
+
+**配色**（都过 WCAG AA）：
+
+| | 值 | 白底对比度 | 用途 |
+| --- | --- | --- | --- |
+| 橄榄绿 | `#5a6b3b` | 5.84:1 | 正文链接、标题、主色 |
+| 深橄榄 | `#414f28` | — | hover、小标题 |
+| 米黄 | `#f0e2b8` | 1.33:1 | **只能做背景**，不能承载文字 |
+| 陶土红 | `#c6502c` | 4.55:1 | 编号、职称、强调；勉强过线，不用于长正文 |
+
+## Banner
+
+内联 SVG，深圳天际线，**由西向东**排列真实地标：
+宝安「湾区之光」摩天轮 → 南山「春笋」华润总部 → 福田平安金融中心 → 罗湖地王大厦。
+颜色走 CSS 变量，换配色时自动跟随。摩天轮是全幅唯一的红。
+
+子页面用同一份图形，只把 `viewBox` 开窗到下半部（`0 90 1232 190`），
+不是另画一张，所以永远不会和主图不一致。
+
+画的时候踩过的坑，改之前先看一眼：
+
+- **春笋是子弹形，不是三角形**。腰部（y≈208）最宽，往上宽度先保持很长一段再收成针尖，
+  中段是**外凸**的。控制点必须压在腰部正上方（`C532 150 541 95 560 60`）；
+  放在腰部到尖顶的连线附近，中段只会鼓出不到 2px，画出来就是三角形。
+- **平安的顶是八道棱线自身收束成的冠部**，不是"塔身 + 一根天线"。塔身从底到顶连续收分。
+- 高度不按真实比例，只保证平安最高。摩天轮按比例只有 59px 会看不清，放大到了 104px。
+
+## 相对旧版退掉的东西
+
+Bootstrap、jQuery、Popper、Font Awesome 全套字体，合计约 3.5 MB → 现在 `index.html` 24 KB
++ `site.css` 16 KB，**零外部请求、零独立 `.js` 文件**（锚点高亮那十几行内联在 HTML 里）。
+学校手册里「网页或潜在脚本文件」那条模糊地带也就不用管了。
+
+图标全部是内联 SVG，不再需要字体文件。

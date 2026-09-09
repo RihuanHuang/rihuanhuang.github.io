@@ -1,42 +1,72 @@
-# site/ — 生成产物，不要手改
+# rihuan.me
 
-手写的静态站，取代 `../site_old/`（那份是 Minimal Mistakes / AcademicPages 的镜像）。
+个人主页的全部源码。手写静态站，不依赖 Jekyll，不依赖任何外部 CDN。
 
-**这个目录里的六个 `.html` 是 `../build.sh` 从 `../src/` 拼出来的，直接改会在下次生成时被覆盖。**
-`assets/`、`images/`、`files/` 不受影响，那些是直接放在这里维护的。
+**一份源码，两个部署目标：**
 
-改内容去 `../src/`：
+| | 地址 | 怎么上去 |
+| --- | --- | --- |
+| GitHub Pages | <https://rihuan.me/> | 推到 `main`，自动发布 `docs/` |
+| 学校主页服务 | `https://mypage.cuhk.edu.cn/<账号>/` | 手动上传 `docs/` 里的内容 |
+
+两边跑的是同一棵 `docs/`。全站相对路径，所以根目录部署和子目录部署都成立 ——
+这也是当初放弃 AcademicPages 的原因，Jekyll 那套在子路径下要改一堆配置。
+
+## 目录
 
 ```
-src/partials/     公用部分，改一次六个页面全跟着变
-  header.en/zh    顶栏与导航（{{home}} {{other}} {{cur_misc}} {{cur_ms}} 由 build 填）
-  profile.en/zh   侧栏（主）
-  profile-ms.en/zh 侧栏（麻薯页）
-  banner-full     首页大幅 banner
-  banner-slim     子页面窄条（同一份图形，viewBox 开窗到下半部）
-  toc.en/zh       右侧锚点导航
-  footer.en/zh    页脚
-  scripts.html    锚点高亮脚本（只有带目录的页面会引入）
+build.py  build.sh          从 src/ 拼装 docs/ 的六个页面
+check.py  check.sh          上传前自检，六类检查
+subset-fonts.py  .sh        重切思源字体子集
+preview.ps1                 本地预览
 
-src/pages/        每页只剩 front matter + 自己的 <main>
+src/partials/               公用部分，改一次六个页面全跟着变
+  header.en/zh              顶栏与导航（{{home}} {{other}} {{cur_misc}} {{cur_ms}} 由 build 填）
+  profile.en/zh             侧栏（主）
+  profile-ms.en/zh          侧栏（麻薯页）
+  banner-full               首页大幅 banner
+  banner-slim               子页面窄条（同一份图形，viewBox 开窗到下半部）
+  toc.en/zh                 右侧锚点导航
+  footer.en/zh              页脚
+  scripts.html              锚点高亮脚本（只有带目录的页面会引入）
+
+src/pages/                  每页只剩 front matter + 自己的 <main>
+
+docs/                       ← 发布目录
+  六个 .html                **生成产物，改了会被覆盖**
+  assets/ images/ files/    直接在这里维护，build 不碰
+  CNAME  .nojekyll          GitHub Pages 用
 ```
 
-改完跑：
+## 改完跑什么
 
 ```bash
 ./build.sh        # 生成六个页面
-./check.sh        # 自检（第一项就是「site/ 与 src/ 是否同步」）
+./check.sh        # 自检，第一项就是「docs/ 与 src/ 是否同步」
+git add -A && git commit -m "..." && git push
 ```
 
 `./build.sh --diff` 只对比不写盘，可以先看会改动什么。
 
+**改内容去 `src/`，别改 `docs/*.html`** —— 下次 build 会覆盖。真改错了 `check.sh` 会拦下来。
+`docs/` 里的图片、PDF、CSS 不是产物，就地改就行。
+
 ## 预览
 
-```
-powershell -NoProfile -ExecutionPolicy Bypass -File ../preview.ps1 -Root . -Port 8765
+```bash
+powershell -NoProfile -ExecutionPolicy Bypass -File preview.ps1
 ```
 
-然后打开 <http://localhost:8767/huangrihuan/>。子路径是故意的，用来暴露写死的绝对路径。
+打开 <http://localhost:8765/huangrihuan/>。子路径是故意的，用来暴露写死的绝对路径 ——
+学校那边是子目录部署，GitHub 这边是根目录，两种都得成立。
+
+## GitHub Pages 设置
+
+Settings → Pages：Source `Deploy from a branch`，分支 `main`，目录 **`/docs`**，
+Custom domain `rihuan.me`，Enforce HTTPS 勾上。
+
+选 `/docs` 是为了让根目录的脚本和 `src/` 不被当成网页发布出去 ——
+`.nojekyll` 会关掉 Jekyll 构建，那样仓库里每个文件都是可访问的。
 
 ## 中英双语
 
@@ -87,36 +117,15 @@ ms.html     ←→  ms-zh.html
 
 三页齐了，可以上传。
 
-## 上传前先自检
+## 上传到学校
 
-```bash
-./check.sh
-```
+传 `docs/` **里面的**内容，共 **63 个文件、97 MB**，在学校手册的限制内
+（≤1200 个文件、<1024 MB）。
 
-（在上级目录。有问题会列出来并非零退出，没问题输出「全部通过，可以上传」。）
+其中 `CNAME` 和 `.nojekyll` 只对 GitHub Pages 有意义，传到学校服务器上是惰性的，
+留着不影响，想省事也可以不传。
 
-一次跑六类检查：
-
-| 检查 | 抓什么 |
-| --- | --- |
-| 字体覆盖 | 新加的中文字不在子集里（症状是静默的：某几个字掉回系统字体） |
-| 标签结构 | 截断、未闭合 —— 浏览器会自动补救所以肉眼看不出来 |
-| 图片宽高比 | `width`/`height` 和实际不符，会让懒加载时页面跳动 |
-| 链接与锚点 | 死链、坏锚点、绝对路径、指回 github.io 的残留、未翻译的 `〔待译` 占位 |
-| 孤儿文件 | `files/`、`images/` 里没被任何页面引用的 |
-| 中英一致 | 页面成对、导航项数相同、切换按钮双向正确、`aria-current` 落在自己身上 |
-
-字体那一项是直接调用 `subset-fonts.py --check` 的，所以「自检」和「重切」用的是同一套
-字符集提取逻辑，不会出现两边算出不同结果的情况。
-
-**这套检查是用注入故障验证过的** —— 七类问题各造一个，确认都能抓到、退出码为 1。
-
-## 上传
-
-传 `site/` **里面的**内容（`README.md` 除外），共 **61 个文件、98 MB**，
-在学校手册的限制内（≤1200 个文件、<1024 MB）。
-
-文件类型只有 `jpg 38 / pdf 8 / html 3 / png 1 / jpeg 1 / css 1` ——
+文件类型只有 `jpg 38 / pdf 8 / html 6 / png 1 / jpeg 1 / css 1 / woff2 3` ——
 **一个 `.js` 都没有**，手册第十六节「网页或潜在脚本文件」那条模糊地带完全绕开了。
 
 ## 麻薯页的两个处理
@@ -167,7 +176,7 @@ Windows 自带的中文字体里，衬线只有 SimSun（宋体），在标题�
 ./subset-fonts.sh
 ```
 
-（在上级目录，不在 `site/` 里。依赖 `py -m pip install fonttools brotli`，
+（在仓库根目录。依赖 `py -m pip install fonttools brotli`，
 只在本机跑，**不上传**。上传的只有 `assets/fonts/*.subset.woff2` 三个文件。）
 
 ## 字体：不要把 Georgia 加回衬线栈

@@ -1,0 +1,19 @@
+<script>
+// Highlight the section link matching the current scroll position
+(function () {
+  var links = [].slice.call(document.querySelectorAll('.toc a'));
+  if (!links.length) return;
+  var map = {};
+  links.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        links.forEach(function (a) { a.classList.remove('is-active'); });
+        if (map[e.target.id]) map[e.target.id].classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-88px 0px -65% 0px' });
+  document.querySelectorAll('main .section').forEach(function (s) { io.observe(s); });
+})();
+
+</script>

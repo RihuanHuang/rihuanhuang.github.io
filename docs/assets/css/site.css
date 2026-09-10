@@ -446,6 +446,39 @@ a:hover { color: var(--red); }
 .foot .wrap { padding-top: 2rem; padding-bottom: 2rem; font-size: 0.82rem; color: var(--green-d); }
 .foot a { color: var(--green-d); }
 
+/* Back to top */
+.totop {
+  position: fixed;
+  bottom: 1.5rem;
+  right: max(1.25rem, calc((100% - var(--wrap)) / 2 + var(--pad)));
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--green);
+  color: var(--ground);
+  text-decoration: none;
+  box-shadow: 0 1px 9px rgba(38, 38, 31, 0.24);
+}
+.totop:hover { background: var(--red); color: var(--ground); }
+.totop svg { display: block; width: 0.95rem; height: 0.95rem; }
+
+@supports (animation-timeline: scroll()) {
+  .totop {
+    animation-name: totop;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: scroll(root block);
+    animation-range: 260px 560px;
+  }
+  @keyframes totop {
+    from { opacity: 0; transform: translateY(10px); pointer-events: none; }
+    to   { opacity: 1; transform: translateY(0);    pointer-events: auto; }
+  }
+}
+
 /* Narrow screens */
 @media (max-width: 1080px) {
   .layout { grid-template-columns: var(--col-left) minmax(0, 1fr); }

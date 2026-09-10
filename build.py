@@ -43,7 +43,7 @@ SKELETON = """<!doctype html>
 </div>
 
 {footer}
-
+{totop}
 {scripts}
 
 </body>
@@ -90,6 +90,9 @@ def render(filename):
     toc = "\n  " + partial(f"toc.{lg}.html") + "\n" if has_toc else ""
     scripts = partial("scripts.html") if has_toc else ""
 
+    totop = ("\n" + partial(f"totop.{lg}.html") + "\n"
+             if meta.get("totop") == "yes" else "")
+
     desc = meta.get("desc", "")
     descmeta = f'<meta name="description" content="{desc}">\n' if desc else ""
 
@@ -105,6 +108,7 @@ def render(filename):
         profile=partial(f"{profile_name}.{lg}.html"),
         main=main,
         toc=toc,
+        totop=totop,
         footer=partial(f"footer.{lg}.html"),
         scripts=scripts,
     )

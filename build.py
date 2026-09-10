@@ -26,7 +26,7 @@ SKELETON = """<!doctype html>
 {descmeta}<link rel="stylesheet" href="assets/css/site.css">
 </head>
 
-<body>
+<body id="top">
 
 {header}
 

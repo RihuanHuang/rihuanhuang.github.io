@@ -1,7 +1,11 @@
 <script>
 (function () {
-  var d = document.documentElement;
-  try { var s = localStorage.getItem("theme"); if (s) d.dataset.theme = s; } catch (e) {}
+  var d = document.documentElement, known = { olive: 1, coast: 1 };
+  try {
+    var s = localStorage.getItem("theme");
+    if (known[s]) d.dataset.theme = s;
+    else if (s) localStorage.removeItem("theme");
+  } catch (e) {}
   function mark() {
     var cur = d.dataset.theme || "olive", b = document.querySelectorAll("[data-set-theme]");
     for (var i = 0; i < b.length; i++)

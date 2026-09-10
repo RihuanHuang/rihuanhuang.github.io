@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import difflib
+import hashlib
 import io
 import os
 import re
@@ -16,6 +17,7 @@ SRC = os.path.join(HERE, "src")
 PART = os.path.join(SRC, "partials")
 PAGES = os.path.join(SRC, "pages")
 OUT = os.path.join(HERE, "docs")
+CSS = os.path.join(OUT, "assets", "css", "site.css")
 
 SKELETON = """<!doctype html>
 <html lang="{htmllang}">
@@ -23,7 +25,7 @@ SKELETON = """<!doctype html>
 <meta charset="utf-8">
 <title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-{descmeta}<link rel="stylesheet" href="assets/css/site.css">
+{descmeta}<link rel="stylesheet" href="assets/css/site.css?v={cssver}">
 {theme}</head>
 
 <body id="top">
@@ -49,6 +51,10 @@ SKELETON = """<!doctype html>
 </body>
 </html>
 """
+
+
+def cssver():
+    return hashlib.sha256(open(CSS, "rb").read()).hexdigest()[:8]
 
 
 def partial(name):
@@ -100,6 +106,7 @@ def render(filename):
         htmllang="zh-Hans" if zh else "en",
         title=meta.get("title", ""),
         descmeta=descmeta,
+        cssver=cssver(),
         theme=partial("theme.html") + "\n",
         header=header,
         banner=partial("banner-full.html" if meta.get("banner") == "full"

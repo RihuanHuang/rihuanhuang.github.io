@@ -265,7 +265,9 @@ def check_in_sync():
         for f in drifted:
             fail("source", f"docs/{f} does not match src/ -- edit src/, "
                            "docs/ is generated")
-        fail("source", "see the diff with py build.py --diff, then rebuild with ./build.sh")
+        fail("source", "if you edited docs/assets/css/site.css this is expected, since its "
+                       "hash is in every page -- just rebuild with ./build.sh; otherwise "
+                       "look first with py build.py --diff")
     else:
         notes.append("docs/ matches src/")
 

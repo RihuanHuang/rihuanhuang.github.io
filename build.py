@@ -24,7 +24,7 @@ SKELETON = """<!doctype html>
 <title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 {descmeta}<link rel="stylesheet" href="assets/css/site.css">
-</head>
+{theme}</head>
 
 <body id="top">
 
@@ -100,6 +100,7 @@ def render(filename):
         htmllang="zh-Hans" if zh else "en",
         title=meta.get("title", ""),
         descmeta=descmeta,
+        theme=partial("theme.html") + "\n",
         header=header,
         banner=partial("banner-full.html" if meta.get("banner") == "full"
                        else "banner-slim.html"),

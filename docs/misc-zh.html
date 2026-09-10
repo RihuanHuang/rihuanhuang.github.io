@@ -5,6 +5,25 @@
 <title>其他 — 黄日环</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="assets/css/site.css">
+<script>
+(function () {
+  var d = document.documentElement;
+  try { var s = localStorage.getItem("theme"); if (s) d.dataset.theme = s; } catch (e) {}
+  function mark() {
+    var cur = d.dataset.theme || "olive", b = document.querySelectorAll("[data-set-theme]");
+    for (var i = 0; i < b.length; i++)
+      b[i].setAttribute("aria-pressed", b[i].getAttribute("data-set-theme") === cur);
+  }
+  document.addEventListener("DOMContentLoaded", mark);
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-set-theme]");
+    if (!b) return;
+    d.dataset.theme = b.getAttribute("data-set-theme");
+    try { localStorage.setItem("theme", d.dataset.theme); } catch (e) {}
+    mark();
+  });
+})();
+</script>
 </head>
 
 <body id="top">
@@ -19,6 +38,10 @@
       <a href="index-zh.html#teaching">教学</a>
       <a href="misc-zh.html" aria-current="page">其他</a>
       <a href="ms-zh.html">麻薯</a>
+      <span class="themes" role="group" aria-label="配色">
+        <button type="button" class="sw sw--olive"  data-set-theme="olive"  aria-label="橄榄绿" title="橄榄绿"></button>
+        <button type="button" class="sw sw--sme" data-set-theme="sme" aria-label="经管" title="经管"></button>
+      </span>
     </nav>
   </div>
 </header>
@@ -102,7 +125,7 @@
         <rect x="977" y="104" width="3" height="28"/>
         <rect x="993" y="104" width="3" height="28"/>
       </g>
-      <g stroke="var(--red)" fill="none" stroke-linecap="round">
+      <g stroke="var(--spot)" fill="none" stroke-linecap="round">
         <g stroke-width="3.4" opacity="0.9">
           <path d="M330 214 L302 280"/><path d="M330 214 L358 280"/>
         </g>
@@ -114,7 +137,7 @@
           <path d="M310 166 L350 262"/><path d="M350 166 L310 262"/>
           <path d="M282 194 L378 234"/><path d="M282 234 L378 194"/>
         </g>
-        <circle cx="330" cy="214" r="6" fill="var(--red)" stroke="none"/>
+        <circle cx="330" cy="214" r="6" fill="var(--spot)" stroke="none"/>
       </g>
     </svg>
   </div>

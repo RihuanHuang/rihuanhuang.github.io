@@ -1,0 +1,19 @@
+<script>
+(function () {
+  var d = document.documentElement;
+  try { var s = localStorage.getItem("theme"); if (s) d.dataset.theme = s; } catch (e) {}
+  function mark() {
+    var cur = d.dataset.theme || "olive", b = document.querySelectorAll("[data-set-theme]");
+    for (var i = 0; i < b.length; i++)
+      b[i].setAttribute("aria-pressed", b[i].getAttribute("data-set-theme") === cur);
+  }
+  document.addEventListener("DOMContentLoaded", mark);
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("[data-set-theme]");
+    if (!b) return;
+    d.dataset.theme = b.getAttribute("data-set-theme");
+    try { localStorage.setItem("theme", d.dataset.theme); } catch (e) {}
+    mark();
+  });
+})();
+</script>

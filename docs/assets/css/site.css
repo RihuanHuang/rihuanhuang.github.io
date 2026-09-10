@@ -44,6 +44,7 @@
   --mono:  ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
 
   --p-olive: #5a6b3b;  --p-olive-d: #414f28;  --a-olive: #bd4d2a;
+  --sand-olive:#f0e2b8;
 
   --p-coast: #35688c;  --p-coast-d: #274d67;  --a-coast: #c34623;
   --sand-coast:#e5d4c8; --spot-coast:#e17557; --build-coast:#619ac3;
@@ -53,7 +54,7 @@
   --red:    var(--a-olive);
   --spot:   var(--red);
   --build:  var(--green);
-  --cream:  #f0e2b8;
+  --cream:  var(--sand-olive);
   --ground: #fbf7ec;
   --ink:    #26261f;
   --muted:  #6f6e61;
@@ -162,7 +163,7 @@ a:hover { color: var(--red); }
   border-radius: 50%;
   cursor: pointer;
 }
-.sw--olive { background: linear-gradient(135deg, var(--p-olive) 50%, var(--a-olive) 50%); }
+.sw--olive { background: linear-gradient(135deg, var(--p-olive) 50%, var(--sand-olive) 50%); }
 .sw--coast { background: linear-gradient(135deg, var(--build-coast) 50%, var(--sand-coast) 50%); }
 :root:not([data-theme]) .sw--olive,
 :root[data-theme="olive"] .sw--olive,

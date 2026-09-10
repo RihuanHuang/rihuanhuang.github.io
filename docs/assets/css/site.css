@@ -523,13 +523,46 @@ a:hover { color: var(--red); }
   .toc { display: none; }
 }
 @media (max-width: 720px) {
+  :root { --head-h: 91px; }
   html { font-size: 16.5px; }
   .layout, .layout--2col { grid-template-columns: 1fr; gap: 1.5rem; }
   .profile { position: static; }
-  .profile__photo { margin-top: -50px; width: 150px; }
-  .mainnav { gap: 1rem; }
-  .mainnav a { font-size: 0.8rem; }
   .section__title { font-size: 1.8rem; }
   .races li { grid-template-columns: 1fr auto; gap: 0.2rem 0.6rem; }
   .races .d { grid-column: 1 / -1; }
+
+  .masthead .wrap {
+    position: relative;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+  }
+  .brand { white-space: nowrap; }
+  .mainnav {
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 1rem;
+  }
+  .mainnav a { font-size: 0.82rem; }
+  .themes {
+    position: absolute;
+    top: 0.85rem;
+    right: var(--pad);
+    gap: 0.7rem;
+  }
+  .sw { width: 18px; height: 18px; }
+
+  .profile__photo { margin-top: -36px; width: 128px; }
+  .layout--slim .profile__photo { margin-top: -26px; }
+  .profile__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem 1.15rem;
+    padding-top: 0.9rem;
+  }
+  .profile__links li { margin-bottom: 0; }
+  .profile__links a { flex: 0 0 auto; }
 }

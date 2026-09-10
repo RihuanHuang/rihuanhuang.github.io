@@ -163,7 +163,7 @@ a:hover { color: var(--red); }
   cursor: pointer;
 }
 .sw--olive { background: linear-gradient(135deg, var(--p-olive) 50%, var(--a-olive) 50%); }
-.sw--coast { background: linear-gradient(135deg, var(--build-coast) 50%, var(--spot-coast) 50%); }
+.sw--coast { background: linear-gradient(135deg, var(--build-coast) 50%, var(--sand-coast) 50%); }
 :root:not([data-theme]) .sw--olive,
 :root[data-theme="olive"] .sw--olive,
 :root[data-theme="coast"] .sw--coast {

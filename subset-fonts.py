@@ -148,7 +148,7 @@ def build():
             f'url("../fonts/{out_name}")',
             css,
         )
-    io.open(CSS, "w", encoding="utf-8").write(css)
+    io.open(CSS, "w", encoding="utf-8", newline="\n").write(css)
     print("==> site.css updated")
 
     for f in sorted(os.listdir(FONT_DIR)):

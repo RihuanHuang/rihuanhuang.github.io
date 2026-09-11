@@ -4,7 +4,7 @@
 @font-face {
   font-family: "Source Han Serif SC";
   src: local("Source Han Serif SC"), local("SourceHanSerifSC-SemiBold"),
-       url("../fonts/SourceHanSerifSC-SemiBold.subset.d7b183f9.woff2") format("woff2");
+       url("../fonts/SourceHanSerifSC-SemiBold.subset.6d89fab5.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -13,7 +13,7 @@
 @font-face {
   font-family: "Source Han Sans SC";
   src: local("Source Han Sans SC"), local("SourceHanSansSC-Regular"),
-       url("../fonts/SourceHanSansSC-Regular.subset.d7b183f9.woff2") format("woff2");
+       url("../fonts/SourceHanSansSC-Regular.subset.6d89fab5.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -22,7 +22,7 @@
 @font-face {
   font-family: "Source Han Sans SC";
   src: local("Source Han Sans SC Bold"), local("SourceHanSansSC-Bold"),
-       url("../fonts/SourceHanSansSC-Bold.subset.d7b183f9.woff2") format("woff2");
+       url("../fonts/SourceHanSansSC-Bold.subset.6d89fab5.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;

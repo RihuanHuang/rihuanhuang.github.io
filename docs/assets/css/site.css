@@ -341,7 +341,6 @@ a:hover { color: var(--red); }
 .pub__meta { display: block; font-size: 0.9rem; color: var(--muted-d); line-height: 1.5; }
 .pub__venue { font-family: var(--serif); font-style: italic; color: var(--ink); }
 .pub__year { font-family: var(--mono); font-size: 0.85em; white-space: nowrap; }
-.pub__me { font-weight: 600; color: var(--ink); white-space: nowrap; }
 .pub__order { font-size: 0.85em; color: var(--muted); white-space: nowrap; }
 
 .tagline {
